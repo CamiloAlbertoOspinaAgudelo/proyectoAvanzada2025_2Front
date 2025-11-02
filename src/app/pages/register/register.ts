@@ -9,16 +9,19 @@ import { repeat } from 'rxjs';
 })
 export class Register {
 
+  cities: string[];
   registerForm!: FormGroup;
   
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
+    this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
 
   private createForm() {
   this.registerForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     phone: ['', [Validators.required, Validators.maxLength(10)]],
+    city: ['', [Validators.required]],
     photoUrl: [''],
     dateBirth: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -27,7 +30,6 @@ export class Register {
   },
   {validators: this.passwordsMatchValidator} as AbstractControlOptions
   );
-  
 }
 
 public createUser() {
@@ -41,5 +43,14 @@ public passwordsMatchValidator(formGroup: FormGroup) {
   // Si las contraseñas no coinciden, devuelve un error, de lo contrario, null
   return password == confirmaPassword ? null : { passwordsMismatch: true };
 }
+
+public onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+      this.registerForm.patchValue({ photoUrl: files });
+    }
+  }
 
 }

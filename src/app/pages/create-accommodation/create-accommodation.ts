@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -26,7 +26,14 @@ export class CreateAccommodation {
       location: ['', [Validators.required]], // Luego se puede mejorar con un mapa
       pricePerNight: ['', [Validators.required, Validators.pattern(/^[0-9]+$/),Validators.min(1)]],
       maxGuests: ['', [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.min(1)]],
-      images: [[], [Validators.required]]
+      images: [[], [Validators.required, this.atLeastOneFile]],
+      services: this.formBuilder.group({
+        wifi: [false],
+        parking: [false],
+        breakfast: [false],
+        pool: [false],
+        petsAllowed: [false],
+      }),
     });
   }
 
@@ -41,5 +48,10 @@ export class CreateAccommodation {
 
   public createNewPlace() {
     console.log(this.createPlaceForm.value);
+  }
+
+  private atLeastOneFile(control: FormControl) {
+  const files = control.value;
+  return files && files.length > 0 ? null : { required: true };
   }
 }

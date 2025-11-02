@@ -1,1 +1,18 @@
-<p>edit-user works!</p>
+<form [formGroup]="editUserForm" (ngSubmit)="editUser()" novalidate="">
+    <div>
+        <label>Nombre: </label>
+        <input type="text" formControlName="name" />
+    </div>
+
+    <div>
+        <label>Teléfono: </label>
+        <input type="text" formControlName="phone" />
+    </div>
+
+    <div>
+        <label>Foto de perfil: </label>
+        <input type="file" (change)="onFileChange($event)"/>
+    </div>
+
+    <button type="submit" [disabled]="editUserForm.invalid">Registrarse</button>
+</form>

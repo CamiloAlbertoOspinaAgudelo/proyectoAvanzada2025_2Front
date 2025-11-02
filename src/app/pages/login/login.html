@@ -1,1 +1,18 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="login()" novalidate="">
+
+    <div>
+        <label>Email: </label>
+        <input type="email" formControlName="email" />
+    </div>
+
+    <div>
+        <label>Contraseña: </label>
+        <input type="password" formControlName="password" />
+    </div>
+
+    @if (loginForm.hasError('passwordsMismatch')) {
+    <p>Las contraseñas no coinciden</p>
+    }
+
+    <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+</form>
