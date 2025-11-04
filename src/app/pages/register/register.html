@@ -1,72 +1,240 @@
-<form [formGroup]="registerForm" (ngSubmit)="createUser()" novalidate="">
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    
+                    <!-- Encabezado -->
+                    <div class="text-center mb-4">
+                        <span class="material-symbols-rounded filled text-primary" style="font-size: 4rem;">person_add</span>
+                        <h4 class="mt-2 mb-0">Crear cuenta</h4>
+                        <p class="text-muted">Únete a la comunidad de Alojha</p>
+                    </div>
 
-    <div class="container pt-5 pb-5">
-        <h5 class="mb-0 d-flex align-items-center">
-            <span class="material-symbols-rounded filled fs-1 me-3">account_circle</span>
-            Crear cuenta
-        </h5>
-        <hr />
-        <div class="card-body">
-            <form class="row g-3" [formGroup]="registerForm" (ngSubmit)="createUser()" novalidate="">
-                <!-- Todo lo demás que va dentro del form -->
-                 <div class="col-12 col-sm-6">
-    <label class="form-label">Nombre: </label>
-    <input class="form-control" type="text" formControlName="name" />
-</div>
+                    <!-- Formulario -->
+                    <form [formGroup]="registerForm" (ngSubmit)="createUser()" novalidate="">
+                        
+                        <div class="row g-3">
+                            
+                            <!-- Información personal -->
+                            <div class="col-12">
+                                <h6 class="text-primary mb-3">
+                                    <span class="material-symbols-rounded align-middle me-2">badge</span>
+                                    Información personal
+                                </h6>
+                            </div>
 
-    <div class="col-12 col-sm-6">
-    <label class="form-label">Teléfono: </label>
-    <input class="form-control" type="text" formControlName="phone" />
-</div>
+                            <!-- Nombre -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Nombre completo</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">person</span>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           formControlName="name" 
+                                           placeholder="Juan Pérez" />
+                                </div>
+                                @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
+                                    <small class="text-danger">El nombre es obligatorio</small>
+                                }
+                            </div>
 
-    <div class="col-12 col-sm-6">
-        <label class="form-label">Ciudad: </label>
-        <select formControlName="city">
-            <option value="" disabled selected>Seleccione una ciudad</option>
-            @for (item of cities; track $index) {
-                <option value="{{item}}">{{item}}</option>
-            }
-        </select>
-    </div>
+                            <!-- Teléfono -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Teléfono</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">phone</span>
+                                    </span>
+                                    <input type="tel" 
+                                           class="form-control" 
+                                           formControlName="phone" 
+                                           placeholder="3001234567"
+                                           maxlength="10" />
+                                </div>
+                                @if (registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched) {
+                                    <small class="text-danger">
+                                        @if (registerForm.get('phone')?.errors?.['required']) {
+                                            El teléfono es obligatorio
+                                        }
+                                        @if (registerForm.get('phone')?.errors?.['maxlength']) {
+                                            Máximo 10 dígitos
+                                        }
+                                    </small>
+                                }
+                            </div>
 
-    <div class="col-12 col-sm-6">
-        <label>Foto de perfil: </label>
-        <input class="form-control" type="file" (change)="onFileChange($event)"/>
-    </div>
+                            <!-- Ciudad -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Ciudad</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">location_city</span>
+                                    </span>
+                                    <select class="form-select" formControlName="city">
+                                        <option value="" disabled selected>Seleccione una ciudad</option>
+                                        @for (item of cities; track $index) {
+                                            <option [value]="item">{{item}}</option>
+                                        }
+                                    </select>
+                                </div>
+                                @if (registerForm.get('city')?.invalid && registerForm.get('city')?.touched) {
+                                    <small class="text-danger">Selecciona una ciudad</small>
+                                }
+                            </div>
 
-    <div class="col-12 col-sm-6">
-        <label class="form-label">Fecha de nacimiento: </label>
-        <input class="form-control" type="date" formControlName="dateBirth" />
-    </div>
+                            <!-- Fecha de nacimiento -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Fecha de nacimiento</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">calendar_today</span>
+                                    </span>
+                                    <input type="date" 
+                                           class="form-control" 
+                                           formControlName="dateBirth" />
+                                </div>
+                                @if (registerForm.get('dateBirth')?.invalid && registerForm.get('dateBirth')?.touched) {
+                                    <small class="text-danger">La fecha de nacimiento es obligatoria</small>
+                                }
+                            </div>
 
-    <div class="col-12 col-sm-6">
-        <label class="form-label">Email: </label>
-        <input class="form-control" type="email" formControlName="email" />
-    </div>
+                            <!-- Foto de perfil -->
+                            <div class="col-12">
+                                <label class="form-label">Foto de perfil (opcional)</label>
+                                <input type="file" 
+                                       class="form-control" 
+                                       accept="image/*"
+                                       (change)="onFileChange($event)" />
+                                <small class="text-muted">Formatos permitidos: JPG, PNG, GIF</small>
+                            </div>
 
-    <div class="col-12 col-sm-6">
-        <label class="form-label">Contraseña: </label>
-        <input class="form-control" type="password" formControlName="password" />
-    </div>
+                            <!-- Información de acceso -->
+                            <div class="col-12 mt-4">
+                                <h6 class="text-primary mb-3">
+                                    <span class="material-symbols-rounded align-middle me-2">security</span>
+                                    Información de acceso
+                                </h6>
+                            </div>
 
-    <div class="col-12 col-sm-6">
-    <label class="form-label">Repetir contraseña: </label>
-    <input class="form-control" type="password" formControlName="repeatPassword" />
-    </div>
+                            <!-- Email -->
+                            <div class="col-12">
+                                <label class="form-label">Correo electrónico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">mail</span>
+                                    </span>
+                                    <input type="email" 
+                                           class="form-control" 
+                                           formControlName="email" 
+                                           placeholder="correo@ejemplo.com" />
+                                </div>
+                                @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                                    <small class="text-danger">
+                                        @if (registerForm.get('email')?.errors?.['required']) {
+                                            El correo es obligatorio
+                                        }
+                                        @if (registerForm.get('email')?.errors?.['email']) {
+                                            Ingresa un correo válido
+                                        }
+                                    </small>
+                                }
+                            </div>
 
-    @if (registerForm.hasError('passwordsMismatch')) {
-    <div class="alert alert-danger" role="alert">Las contraseñas no coinciden</div>
-    }
+                            <!-- Contraseña -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">lock</span>
+                                    </span>
+                                    <input type="password" 
+                                           class="form-control" 
+                                           formControlName="password" 
+                                           placeholder="••••••••" />
+                                </div>
+                                @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                                    <small class="text-danger">
+                                        @if (registerForm.get('password')?.errors?.['required']) {
+                                            La contraseña es obligatoria
+                                        }
+                                        @if (registerForm.get('password')?.errors?.['minlength']) {
+                                            Mínimo 8 caracteres
+                                        }
+                                    </small>
+                                }
+                            </div>
 
-    <div class="d-flex justify-content-center">
-    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" type="submit"
-        [disabled]="registerForm.invalid">
-        <span class="material-symbols-rounded">check</span>
-        Registrarse
-    </button>
-</div>
-            </form>
+                            <!-- Repetir contraseña -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Repetir contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="material-symbols-rounded">lock</span>
+                                    </span>
+                                    <input type="password" 
+                                           class="form-control" 
+                                           formControlName="repeatPassword" 
+                                           placeholder="••••••••" />
+                                </div>
+                                @if (registerForm.get('repeatPassword')?.invalid && registerForm.get('repeatPassword')?.touched) {
+                                    <small class="text-danger">Repite la contraseña</small>
+                                }
+                            </div>
+
+                            <!-- Error de contraseñas no coinciden -->
+                            @if (registerForm.hasError('passwordsMismatch') && registerForm.get('repeatPassword')?.touched) {
+                                <div class="col-12">
+                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <span class="material-symbols-rounded me-2">error</span>
+                                        Las contraseñas no coinciden
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- Términos y condiciones -->
+                            <div class="col-12 mt-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        Acepto los <a href="#" class="text-decoration-none">Términos y condiciones</a> 
+                                        y la <a href="#" class="text-decoration-none">Política de privacidad</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Botón de registro -->
+                            <div class="col-12 d-grid mt-4">
+                                <button class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2" 
+                                        type="submit" 
+                                        [disabled]="registerForm.invalid">
+                                    <span class="material-symbols-rounded">check</span>
+                                    Crear cuenta
+                                </button>
+                            </div>
+
+                            <!-- Separador -->
+                            <div class="col-12 text-center my-3">
+                                <small class="text-muted">o</small>
+                            </div>
+
+                            <!-- Link a login -->
+                            <div class="col-12 text-center">
+                                <p class="mb-0">
+                                    ¿Ya tienes cuenta? 
+                                    <a routerLink="/login" class="text-decoration-none fw-semibold">Inicia sesión</a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
         </div>
     </div>
-
-</form>
+</div>

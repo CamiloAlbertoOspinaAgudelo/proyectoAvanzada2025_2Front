@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { TokenService } from '../../services/token-service';
 import { LoginDTO } from '../../models/login-dto';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
