@@ -1,18 +1,38 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate="">
 
-    <div>
-        <label>Email: </label>
-        <input type="email" formControlName="email" />
+    <div class="container pt-5 pb-5">
+    <h5 class="mb-0 d-flex align-items-center">
+        <span class="material-symbols-rounded filled fs-1 me-3">account_circle</span>
+        Crear cuenta
+    </h5>
+    <hr />
+    <div class="card-body">
+        <form class="row g-3" [formGroup]="loginForm" (ngSubmit)="login()" novalidate="">
+            <!-- Todo lo demás que va dentro del form -->
+             <div>
+        <label class="form-label">Email: </label>
+        <input class="form-control" type="email" formControlName="email" />
     </div>
 
     <div>
-        <label>Contraseña: </label>
-        <input type="password" formControlName="password" />
+        <label class="form-label">Contraseña: </label>
+        <input class="form-control" type="password" formControlName="password" />
     </div>
 
     @if (loginForm.hasError('passwordsMismatch')) {
-    <p>Las contraseñas no coinciden</p>
+    <div class="alert alert-danger" role="alert">Las contraseñas no coinciden</div>
     }
 
-    <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
+    <div class="d-flex justify-content-center">
+    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" type="submit"
+        [disabled]="loginForm.invalid">
+        <span class="material-symbols-rounded">check</span>
+        Log In
+    </button>
+</div>
+
+        </form>
+    </div>
+</div>
+
 </form>

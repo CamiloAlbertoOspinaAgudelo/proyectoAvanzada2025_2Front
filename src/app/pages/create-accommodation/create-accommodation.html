@@ -9,15 +9,15 @@
         <textarea formControlName="description"></textarea>
     </div>
 
-    <div>
-        <label>Ciudad: </label>
-        <select formControlName="city">
-            <option value="" disabled selected>Seleccione una ciudad</option>
-            @for (item of cities; track $index) {
-                <option value="{{item}}">{{item}}</option>
-            }
-        </select>
-    </div>
+    <div class="col-12 col-sm-6">
+    <label class="form-label">Ciudad: </label>
+    <select class="form-select" formControlName="city">
+        <option value="" disabled selected>Seleccione una ciudad</option>
+        @for (item of cities; track $index) {
+            <option value="{{item}}">{{item}}</option>
+        }
+    </select>
+</div>
 
     <div>
         <label>Dirección: </label>
