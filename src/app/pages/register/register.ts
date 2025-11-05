@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { repeat } from 'rxjs';
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
