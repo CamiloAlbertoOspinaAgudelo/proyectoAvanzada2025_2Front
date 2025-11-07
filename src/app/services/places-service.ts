@@ -48,7 +48,7 @@ export class PlacesService {
       ],
       services: ['WiFi', 'Parqueadero', 'Chimenea', 'Zona BBQ'],
       capMax: 6,
-      PriceNight: 250000,
+      priceNight: 250000,
       hostId: 'host_001',
       address: {
         city: 'Manizales',
@@ -66,7 +66,7 @@ export class PlacesService {
       ],
       services: ['WiFi', 'Ascensor', 'Aire acondicionado'],
       capMax: 3,
-      PriceNight: 180000,
+      priceNight: 180000,
       hostId: 'host_002',
       address: {
         city: 'Bogotá',
@@ -84,7 +84,7 @@ export class PlacesService {
       ],
       services: ['WiFi', 'Kayaks', 'Fogata', 'Restaurante'],
       capMax: 4,
-      PriceNight: 300000,
+      priceNight: 300000,
       hostId: 'host_003',
       address: {
         city: 'Guatapé',

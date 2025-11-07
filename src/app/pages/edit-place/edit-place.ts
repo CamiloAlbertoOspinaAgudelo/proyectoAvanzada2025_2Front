@@ -46,8 +46,8 @@ export class EditPlace {
       city: ['', Validators.required],
       address: ['', Validators.required],
       location: ['', Validators.required],
-      pricePerNight: [null, [Validators.required, Validators.min(1)]],
-      maxGuests: [null, [Validators.required, Validators.min(1)]],
+      priceNight: [null, [Validators.required, Validators.min(1)]],
+      capMax: [null, [Validators.required, Validators.min(1)]],
       services: this.fb.group({
         wifi: [false],
         parking: [false],
@@ -73,8 +73,8 @@ export class EditPlace {
       city: place.address?.city,
       address: place.address?.direction,
       location: `${place.address?.location.lat},${place.address?.location.lng}`,
-      pricePerNight: place.PriceNight,
-      maxGuests: place.capMax,
+      priceNight: place.priceNight,
+      capMax: place.capMax,
       services: {
         wifi: place.services.includes('wifi'),
         parking: place.services.includes('parking'),
@@ -110,12 +110,12 @@ export class EditPlace {
       photoUrls: this.place?.photoUrls || [],
       services: Object.keys(formValue.services)
         .filter(key => formValue.services[key]),
-      capMax: formValue.maxGuests,
-      PriceNight: formValue.pricePerNight,
+      capMax: formValue.capMax,
+      priceNight: formValue.priceNight,
       hostId: this.place?.hostId || '',
       address: {
         city: formValue.city,
-        direction: formValue.address,
+        direction: formValue.direction,
         location: { lat, lng }
       }
     };

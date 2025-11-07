@@ -79,19 +79,19 @@
                     <label class="form-label">Precio por noche</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" formControlName="pricePerNight" 
+                        <input type="number" class="form-control" formControlName="priceNight" 
                                placeholder="150000" min="1" />
                     </div>
-                    @if (editPlaceForm.get('pricePerNight')?.invalid && editPlaceForm.get('pricePerNight')?.touched) {
+                    @if (editPlaceForm.get('priceNight')?.invalid && editPlaceForm.get('priceNight')?.touched) {
                         <small class="text-danger">El precio debe ser mayor a 0</small>
                     }
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label">Máximo de huéspedes</label>
-                    <input type="number" class="form-control" formControlName="maxGuests" 
+                    <input type="number" class="form-control" formControlName="capMax" 
                            placeholder="4" min="1" />
-                    @if (editPlaceForm.get('maxGuests')?.invalid && editPlaceForm.get('maxGuests')?.touched) {
+                    @if (editPlaceForm.get('capMax')?.invalid && editPlaceForm.get('capMax')?.touched) {
                         <small class="text-danger">La capacidad debe ser mayor a 0</small>
                     }
                 </div>

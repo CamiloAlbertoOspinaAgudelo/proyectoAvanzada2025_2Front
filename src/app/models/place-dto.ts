@@ -5,7 +5,7 @@ export interface PlaceDTO {
     photoUrls: string[];
     services: string[];
     capMax: number;
-    PriceNight: number;
+    priceNight: number;
     hostId: string;
     address: AddressDTO;
 }
