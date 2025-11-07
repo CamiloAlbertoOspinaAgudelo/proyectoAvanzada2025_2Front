@@ -6,6 +6,9 @@ import { CreateAccommodation } from './pages/create-accommodation/create-accommo
 import { EditUser } from './pages/edit-user/edit-user';
 import { RecoverPassword } from './pages/recover-password/recover-password';
 import { ResetPassword } from './pages/reset-password/reset-password';
+import { MyPlaces } from './pages/my-places/my-places';
+import { Accommodation } from './pages/accommodation/accommodation';
+import { EditPlace } from './pages/edit-place/edit-place';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -15,5 +18,8 @@ export const routes: Routes = [
     {path: 'edit-user', component: EditUser},
     {path: 'recover-password', component: RecoverPassword},
     {path: 'reset-password', component: ResetPassword},
+    { path: 'my-places', component: MyPlaces },
+    { path: 'accommodation/:id', component: Accommodation },
+    { path: 'edit-place/:id', component: EditPlace },
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];
