@@ -31,29 +31,35 @@
                     <h6 class="text-primary">Ubicación</h6>
                 </div>
 
-                <div class="col-12 col-md-6">
-                    <label class="form-label">Ciudad</label>
-                    <select class="form-select" formControlName="city">
-                        <option value="" disabled selected>Seleccione una ciudad</option>
-                        @for (item of cities; track $index) {
-                            <option [value]="item">{{item}}</option>
-                        }
-                    </select>
-                </div>
+                <div formGroupName="address">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label">Ciudad</label>
+              <select class="form-select" formControlName="city">
+                <option value="" disabled selected>Seleccione una ciudad</option>
+                @for (item of cities; track $index) {
+                  <option [value]="item">{{item}}</option>
+                }
+              </select>
+            </div>
 
-                <div class="col-12 col-md-6">
-                    <label class="form-label">Dirección</label>
-                    <input type="text" class="form-control" formControlName="address" 
-                           placeholder="Ej: Calle 15 # 20-30" />
-                </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Dirección</label>
+              <input type="text" class="form-control" formControlName="direction" 
+                     placeholder="Ej: Calle 15 # 20-30" />
+            </div>
 
-                <div class="col-12">
-                    <label class="form-label">Coordenadas (Ubicación en el mapa)</label>
-                    <input type="text" class="form-control" formControlName="location" 
-                           placeholder="Ej: 4.5339,-75.6811" />
-                    <small class="text-muted">Formato: latitud,longitud</small>
-                </div>
-
+            <!-- Coordenadas dentro de location -->
+            <div class="col-12" formGroupName="location">
+              <label class="form-label">Coordenadas (Ubicación en el mapa)</label>
+              <div class="input-group">
+                <input type="text" class="form-control" formControlName="lat" placeholder="Latitud (Ej: 4.5339)" />
+                <input type="text" class="form-control" formControlName="lng" placeholder="Longitud (Ej: -75.6811)" />
+              </div>
+              <small class="text-muted">Formato: latitud, longitud</small>
+            </div>
+          </div>
+        </div>
                 <!-- Capacidad y precio -->
                 <div class="col-12 mt-4">
                     <h6 class="text-primary">Capacidad y precio</h6>
