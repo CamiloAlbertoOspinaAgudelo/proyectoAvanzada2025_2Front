@@ -1,4 +1,4 @@
-import { JsonPipe } from '@angular/common';
+import { DecimalPipe, JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
@@ -7,7 +7,7 @@ import { PlaceDTO } from '../../models/place-dto';
 
 @Component({
   selector: 'app-accommodation',
-  imports: [JsonPipe, RouterModule, ReactiveFormsModule],
+  imports: [ RouterModule, ReactiveFormsModule, DecimalPipe],
   templateUrl: './accommodation.html',
   styleUrl: './accommodation.css'
 })
@@ -29,5 +29,9 @@ export class Accommodation {
     if(selectedPlace != undefined){
       this.place = selectedPlace;
     }
+  }
+
+  getGuestsArray(): number[] {
+    return Array.from({ length: this.place?.capMax || 10 }, (_, i) => i + 1);
   }
 }

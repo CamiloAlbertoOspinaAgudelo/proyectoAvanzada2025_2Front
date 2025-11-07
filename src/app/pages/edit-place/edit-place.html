@@ -1,1 +1,216 @@
-<p>edit-place works!</p>
+<div class="container pt-5 pb-5">
+    <h5 class="mb-0 d-flex align-items-center">
+        <span class="material-symbols-rounded filled fs-1 me-3">edit</span>
+        Editar Alojamiento
+    </h5>
+    <hr />
+    
+    @if (place) {
+    <div class="card">
+        <div class="card-body">
+            <form class="row g-3" [formGroup]="editPlaceForm" (ngSubmit)="updatePlace()" novalidate="">
+                
+                <!-- Información básica -->
+                <div class="col-12">
+                    <h6 class="text-primary">Información básica</h6>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Título del alojamiento</label>
+                    <input type="text" class="form-control" formControlName="title" 
+                           placeholder="Ej: Apartamento moderno en el centro" />
+                    @if (editPlaceForm.get('title')?.invalid && editPlaceForm.get('title')?.touched) {
+                        <small class="text-danger">El título es obligatorio</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" formControlName="description" rows="4"
+                              placeholder="Describe tu alojamiento..."></textarea>
+                    @if (editPlaceForm.get('description')?.invalid && editPlaceForm.get('description')?.touched) {
+                        <small class="text-danger">La descripción es obligatoria</small>
+                    }
+                </div>
+
+                <!-- Ubicación -->
+                <div class="col-12 mt-4">
+                    <h6 class="text-primary">Ubicación</h6>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Ciudad</label>
+                    <select class="form-select" formControlName="city">
+                        <option value="" disabled>Seleccione una ciudad</option>
+                        @for (item of cities; track $index) {
+                            <option [value]="item">{{item}}</option>
+                        }
+                    </select>
+                    @if (editPlaceForm.get('city')?.invalid && editPlaceForm.get('city')?.touched) {
+                        <small class="text-danger">La ciudad es obligatoria</small>
+                    }
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" formControlName="address" 
+                           placeholder="Ej: Calle 15 # 20-30" />
+                    @if (editPlaceForm.get('address')?.invalid && editPlaceForm.get('address')?.touched) {
+                        <small class="text-danger">La dirección es obligatoria</small>
+                    }
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Coordenadas (Ubicación en el mapa)</label>
+                    <input type="text" class="form-control" formControlName="location" 
+                           placeholder="Ej: 4.5339,-75.6811" />
+                    <small class="text-muted">Formato: latitud,longitud</small>
+                    @if (editPlaceForm.get('location')?.invalid && editPlaceForm.get('location')?.touched) {
+                        <small class="text-danger d-block">La ubicación es obligatoria</small>
+                    }
+                </div>
+
+                <!-- Capacidad y precio -->
+                <div class="col-12 mt-4">
+                    <h6 class="text-primary">Capacidad y precio</h6>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Precio por noche</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" formControlName="pricePerNight" 
+                               placeholder="150000" min="1" />
+                    </div>
+                    @if (editPlaceForm.get('pricePerNight')?.invalid && editPlaceForm.get('pricePerNight')?.touched) {
+                        <small class="text-danger">El precio debe ser mayor a 0</small>
+                    }
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label class="form-label">Máximo de huéspedes</label>
+                    <input type="number" class="form-control" formControlName="maxGuests" 
+                           placeholder="4" min="1" />
+                    @if (editPlaceForm.get('maxGuests')?.invalid && editPlaceForm.get('maxGuests')?.touched) {
+                        <small class="text-danger">La capacidad debe ser mayor a 0</small>
+                    }
+                </div>
+
+                <!-- Imágenes actuales -->
+                <div class="col-12 mt-4">
+                    <h6 class="text-primary">Imágenes actuales</h6>
+                </div>
+
+                <div class="col-12">
+                    <div class="row g-2">
+                        @for (photo of place.photoUrls; track $index) {
+                            <div class="col-6 col-md-3">
+                                <img [src]="photo" [alt]="place.title" 
+                                     class="img-thumbnail w-100" 
+                                     style="height: 150px; object-fit: cover;" />
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Agregar nuevas fotos (opcional)</label>
+                    <input type="file" class="form-control" multiple accept="image/*"
+                           (change)="onFileChange($event)" />
+                    <small class="text-muted">Puedes seleccionar múltiples imágenes para reemplazar las actuales</small>
+                </div>
+
+                <!-- Servicios -->
+                <div class="col-12 mt-4">
+                    <h6 class="text-primary">Servicios adicionales</h6>
+                </div>
+
+                <div class="col-12" formGroupName="services">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                       formControlName="wifi" id="wifi">
+                                <label class="form-check-label" for="wifi">
+                                    <span class="material-symbols-rounded align-middle me-1">wifi</span>
+                                    Wi-Fi
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                       formControlName="parking" id="parking">
+                                <label class="form-check-label" for="parking">
+                                    <span class="material-symbols-rounded align-middle me-1">local_parking</span>
+                                    Parqueadero
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                       formControlName="breakfast" id="breakfast">
+                                <label class="form-check-label" for="breakfast">
+                                    <span class="material-symbols-rounded align-middle me-1">restaurant</span>
+                                    Desayuno incluido
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                       formControlName="pool" id="pool">
+                                <label class="form-check-label" for="pool">
+                                    <span class="material-symbols-rounded align-middle me-1">pool</span>
+                                    Piscina
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" 
+                                       formControlName="petsAllowed" id="petsAllowed">
+                                <label class="form-check-label" for="petsAllowed">
+                                    <span class="material-symbols-rounded align-middle me-1">pets</span>
+                                    Se permiten mascotas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="col-12 d-flex justify-content-between mt-4">
+                    <button type="button" routerLink="/my-places" 
+                            class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
+                        <span class="material-symbols-rounded">arrow_back</span>
+                        Cancelar
+                    </button>
+                    
+                    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" 
+                            type="submit" [disabled]="editPlaceForm.invalid">
+                        <span class="material-symbols-rounded">save</span>
+                        Guardar cambios
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    } @else {
+    <!-- Mensaje si no se encuentra el alojamiento -->
+    <div class="text-center py-5">
+        <span class="material-symbols-rounded text-muted" style="font-size: 4rem;">error</span>
+        <h4 class="mt-3 text-muted">Alojamiento no encontrado</h4>
+        <button routerLink="/my-places" class="btn btn-primary mt-3">
+            <span class="material-symbols-rounded align-middle me-1">arrow_back</span>
+            Volver a mis alojamientos
+        </button>
+    </div>
+    }
+</div>

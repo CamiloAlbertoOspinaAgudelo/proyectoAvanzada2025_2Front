@@ -1,9 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
+import { PlacesService } from '../../services/places-service';
 
 @Component({
   selector: 'app-create-accommodation',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './create-accommodation.html',
   styleUrl: './create-accommodation.css'
 })
@@ -12,7 +16,7 @@ export class CreateAccommodation {
   cities: string[];
   createPlaceForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private router: Router) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -47,7 +51,8 @@ export class CreateAccommodation {
   }
 
   public createNewPlace() {
-    console.log(this.createPlaceForm.value);
+    this.placesService.save(this.createPlaceForm.value);
+    Swal.fire("Exito!", "Se ha creado un nuevo alojamiento.", "success");
   }
 
   private atLeastOneFile(control: FormControl) {
