@@ -23,12 +23,17 @@ export class CreateAccommodation {
     this.createPlaceForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      location: ['', [Validators.required]], // Luego se puede mejorar con un mapa
       priceNight: ['', [Validators.required, Validators.pattern(/^[0-9]+$/),Validators.min(1)]],
       capMax: ['', [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.min(1)]],
       photoUrls: [[], [Validators.required, this.atLeastOneFile]],
+      address: this.formBuilder.group({
+        city: ['', [Validators.required]],
+        direction: ['', [Validators.required]],
+        location: this.formBuilder.group({
+          lat: ['', [Validators.required, Validators.pattern(/^[-]?[0-9]+(\.[0-9]+)?$/)]],
+          lng: ['', [Validators.required, Validators.pattern(/^[-]?[0-9]+(\.[0-9]+)?$/)]],
+        }),
+      }),
       services: this.formBuilder.group({
         wifi: [false],
         parking: [false],
