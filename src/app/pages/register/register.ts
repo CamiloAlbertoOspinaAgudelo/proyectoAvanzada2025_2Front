@@ -5,6 +5,7 @@ import { repeat } from 'rxjs';
 import { UserService } from '../../services/user-service';
 import Swal from 'sweetalert2';
 import { CreateUserDTO } from '../../models/create-user-dto';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterModule],
@@ -16,7 +17,7 @@ export class Register {
   cities: string[];
   registerForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -40,7 +41,7 @@ export class Register {
     // Obtenemos los datos del formulario y los convertimos a CreateUserDTO
     const createUserDTO = this.registerForm.value as CreateUserDTO;
 
-    this.userService.create(createUserDTO).subscribe({
+    this.authService.create(createUserDTO).subscribe({
       next: (data) => {
         // Mostramos el mensaje de éxito del backend
         Swal.fire({

@@ -10,13 +10,10 @@ import { EditUserDTO } from '../models/edit-user-dto';
 })
 export class UserService {
   
-  private usersURL = "http://localhost:4200/api/users";
+  private usersURL = "http://localhost:8080/api/users";
 
   constructor(private http: HttpClient) { }
 
-  public create(createUserDTO: CreateUserDTO): Observable<ResponseDTO> {
-    return this.http.post<ResponseDTO>(this.usersURL, createUserDTO);
-  }
 
   public edit(editUserDTO: EditUserDTO): Observable<ResponseDTO> {
     return this.http.put<ResponseDTO>(this.usersURL, editUserDTO);
@@ -32,6 +29,6 @@ export class UserService {
 
   // Permite obtener los alojamientos de un usuario paginados
   public getPlaces(id: string, page: number): Observable<ResponseDTO> {
-    return this.http.get<ResponseDTO>(`${this.usersURL}/${id}/accommodations`, { params: { page } }); // Si el backend usa @RequestParam para paginación se debe enviar así
+    return this.http.get<ResponseDTO>(`${this.usersURL}/${id}/accommodation`, { params: { page } }); // Si el backend usa @RequestParam para paginación se debe enviar así
   }
 }
