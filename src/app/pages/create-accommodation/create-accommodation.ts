@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { PlacesService } from '../../services/places-service';
+import { MapService } from '../../services/map-service';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -14,7 +15,7 @@ export class CreateAccommodation {
   cities: string[];
   createPlaceForm!: FormGroup;
   
-  constructor(private formBuilder: FormBuilder, private placesService: PlacesService) {
+  constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -62,4 +63,17 @@ export class CreateAccommodation {
   const files = control.value;
   return files && files.length > 0 ? null : { required: true };
   }
+
+  ngOnInit(): void {
+    // Inicializa el mapa con la configuración predeterminada
+    this.mapService.create();
+    // Se suscribe al evento de agregar marcador y actualiza el formulario
+    this.mapService.addMarker().subscribe((marker) => {
+      this.createPlaceForm.get('location')?.setValue({
+        lat: marker.lat,
+        lng: marker.lng,
+      });
+    });
+  }
+  
 }

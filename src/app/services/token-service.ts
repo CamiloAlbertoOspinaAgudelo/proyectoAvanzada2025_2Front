@@ -40,6 +40,11 @@ export class TokenService {
     return JSON.parse(decodedPayload);
   }
 
+  private getPayload(): any {
+    const token = this.getToken();
+    return token ? this.decodePayload(token) : null;
+  }
+
   public getUserId(): string {
     const token = this.getToken();
     if (token) {
