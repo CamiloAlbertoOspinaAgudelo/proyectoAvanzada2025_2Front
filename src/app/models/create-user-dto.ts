@@ -4,5 +4,6 @@ export interface CreateUserDTO {
     email: string,
     password: string,
     photoUrl: string,
-    dateBirth: Date
+    dateBirth: Date,
+    rol: 'USER' | 'HOST'
 }

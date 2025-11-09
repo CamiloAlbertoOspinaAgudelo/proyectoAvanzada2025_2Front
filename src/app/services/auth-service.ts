@@ -18,6 +18,6 @@ export class AuthService {
   }
 
   public create(createUserDTO: CreateUserDTO): Observable<ResponseDTO> {
-    return this.http.post<ResponseDTO>(this.authURL, createUserDTO);
+    return this.http.post<ResponseDTO>(`${this.authURL}/register`, createUserDTO);
   }
 }
