@@ -6,29 +6,29 @@ const TOKEN_KEY = "AuthToken";
   providedIn: 'root'
 })
 export class TokenService {
-  
+
   constructor() { }
-  
+
   private setToken(token: string) {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.setItem(TOKEN_KEY, token);
   }
-  
+
   public getToken(): string | null {
     return sessionStorage.getItem(TOKEN_KEY);
   }
-  
+
   public isLogged(): boolean {
     if (this.getToken()) {
       return true;
     }
     return false;
   }
-  
+
   public login(token: string) {
-    this.setToken(token);    
+    this.setToken(token);
   }
-  
+
   public logout() {
     window.sessionStorage.clear();
   }
@@ -62,5 +62,5 @@ export class TokenService {
     }
     return "";
   }
-  
+
 }

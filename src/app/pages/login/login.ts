@@ -20,7 +20,7 @@ export class Login {
     this.createForm();
   }
 
-  private createForm(){
+  private createForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -41,9 +41,19 @@ export class Login {
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: error.error.msg // Mostramos el mensaje de error del backend
+          text: this.convertirAString(error.error.msg) // Mostramos el mensaje de error del backend
         });
       }
     });
+  }
+
+  public convertirAString(data: string) {
+
+    let result = Array.isArray(data)
+      ? data.map(e => `${e.field}: ${e.defaultMessage}`).join(", ")
+      : data;
+
+    return result;
+
   }
 }

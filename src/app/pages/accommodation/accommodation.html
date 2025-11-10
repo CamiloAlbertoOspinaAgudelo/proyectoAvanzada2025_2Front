@@ -1,6 +1,6 @@
 <div class="container pt-5 pb-5">
     @if (place) {
-    
+
     <!-- Encabezado con título y precio -->
     <div class="d-flex justify-content-between align-items-start mb-3">
         <div>
@@ -21,25 +21,22 @@
     <!-- Galería de imágenes -->
     <div class="row g-2 mb-4">
         <div class="col-12 col-md-8">
-            <img [src]="place.photoUrls[0]" [alt]="place.title" 
-                 class="img-fluid rounded w-100" 
-                 style="height: 400px; object-fit: cover;" />
+            <img [src]="place.photoUrls[0]" [alt]="place.title" class="img-fluid rounded w-100"
+                style="height: 400px; object-fit: cover;" />
         </div>
         <div class="col-12 col-md-4">
             <div class="row g-2">
                 @if (place.photoUrls.length > 1) {
-                    <div class="col-12">
-                        <img [src]="place.photoUrls[1]" [alt]="place.title" 
-                             class="img-fluid rounded w-100" 
-                             style="height: 195px; object-fit: cover;" />
-                    </div>
+                <div class="col-12">
+                    <img [src]="place.photoUrls[1]" [alt]="place.title" class="img-fluid rounded w-100"
+                        style="height: 195px; object-fit: cover;" />
+                </div>
                 }
                 @if (place.photoUrls.length > 2) {
-                    <div class="col-12">
-                        <img [src]="place.photoUrls[2]" [alt]="place.title" 
-                             class="img-fluid rounded w-100" 
-                             style="height: 195px; object-fit: cover;" />
-                    </div>
+                <div class="col-12">
+                    <img [src]="place.photoUrls[2]" [alt]="place.title" class="img-fluid rounded w-100"
+                        style="height: 195px; object-fit: cover;" />
+                </div>
                 }
             </div>
         </div>
@@ -48,7 +45,7 @@
     <div class="row">
         <!-- Columna principal: Información del alojamiento -->
         <div class="col-12 col-lg-8">
-            
+
             <!-- Descripción -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -83,12 +80,12 @@
                     </h5>
                     <div class="row g-3">
                         @for (service of place.services; track $index) {
-                            <div class="col-6 col-md-4">
-                                <div class="d-flex align-items-center">
-                                    <span class="material-symbols-rounded text-success me-2">check_circle</span>
-                                    <span>{{ service }}</span>
-                                </div>
+                        <div class="col-6 col-md-4">
+                            <div class="d-flex align-items-center">
+                                <span class="material-symbols-rounded text-success me-2">check_circle</span>
+                                <span>{{ service }}</span>
                             </div>
+                        </div>
                         }
                     </div>
                 </div>
@@ -120,7 +117,7 @@
             <div class="card shadow-sm sticky-top" style="top: 20px;">
                 <div class="card-body">
                     <h5 class="card-title text-center mb-4">Reservar ahora</h5>
-                    
+
                     <!-- Precio destacado -->
                     <div class="text-center mb-4">
                         <h3 class="text-primary mb-0">${{ place.priceNight | number }}</h3>
@@ -142,7 +139,7 @@
                         <label class="form-label">Número de huéspedes</label>
                         <select class="form-select">
                             @for (num of getGuestsArray(); track $index) {
-                                <option [value]="num">{{ num }} {{ num === 1 ? 'huésped' : 'huéspedes' }}</option>
+                            <option [value]="num">{{ num }} {{ num === 1 ? 'huésped' : 'huéspedes' }}</option>
                             }
                         </select>
                     </div>
@@ -164,7 +161,8 @@
             <!-- Información del anfitrión -->
             <div class="card mt-3">
                 <div class="card-body text-center">
-                    <span class="material-symbols-rounded filled text-primary" style="font-size: 3rem;">account_circle</span>
+                    <span class="material-symbols-rounded filled text-primary"
+                        style="font-size: 3rem;">account_circle</span>
                     <h6 class="mt-2 mb-1">Anfitrión</h6>
                     <p class="text-muted small mb-2">ID: {{ place.hostId }}</p>
                     <button class="btn btn-outline-primary btn-sm">

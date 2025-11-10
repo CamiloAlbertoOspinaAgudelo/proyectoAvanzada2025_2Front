@@ -18,7 +18,7 @@ export class EditPlace {
   placeId: string = '';
   place: PlaceDTO | undefined;
   cities: string[];
-  
+
   selectedFiles: File[] = [];
 
   constructor(
@@ -26,7 +26,7 @@ export class EditPlace {
     private route: ActivatedRoute,
     private router: Router,
     private placesService: PlacesService
-  ) { this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];}
+  ) { this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena']; }
 
   ngOnInit(): void {
     // Obtenemos el ID desde la URL
@@ -121,7 +121,7 @@ export class EditPlace {
     };
 
     // Actualizamos en el servicio
-    this.placesService.update( parseInt(this.placeId), updated);
+    this.placesService.update(parseInt(this.placeId), updated);
 
     alert('Alojamiento actualizado correctamente');
     this.router.navigate(['/my-places']);

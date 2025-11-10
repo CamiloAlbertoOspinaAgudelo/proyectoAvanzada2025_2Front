@@ -20,7 +20,7 @@ export class MyPlaces {
   }
 
   public onDelete(placeId: number) {
-  
+
     Swal.fire({
       title: "¿Estás seguro?",
       text: "Esta acción cambiará el estado de los alojamientos a Eliminados.",

@@ -9,7 +9,7 @@ import { EditUserDTO } from '../models/edit-user-dto';
   providedIn: 'root'
 })
 export class UserService {
-  
+
   private usersURL = "http://localhost:8080/api/users";
 
   constructor(private http: HttpClient) { }

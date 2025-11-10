@@ -17,14 +17,14 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.mapService.create();
-  // Obtiene todos los alojamientos de prueba
-  const places = this.placesService.getAll();
-  // Mapea los alojamientos a marcadores y los dibuja en el mapa
-  const markers = this.mapItemToMarker(places);
-  // Dibuja los marcadores en el mapa
-  this.mapService.drawMarkers(markers);
+    // Obtiene todos los alojamientos de prueba
+    const places = this.placesService.getAll();
+    // Mapea los alojamientos a marcadores y los dibuja en el mapa
+    const markers = this.mapItemToMarker(places);
+    // Dibuja los marcadores en el mapa
+    this.mapService.drawMarkers(markers);
   }
-  
+
   public mapItemToMarker(places: PlaceDTO[]): MarkerDTO[] {
     return places.map((item) => ({
       id: item.id,

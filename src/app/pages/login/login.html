@@ -1,20 +1,21 @@
 <div class="container pt-5 pb-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
-            
+
             <div class="card shadow-sm">
                 <div class="card-body p-4">
-                    
+
                     <!-- Encabezado -->
                     <div class="text-center mb-4">
-                        <span class="material-symbols-rounded filled text-primary" style="font-size: 4rem;">account_circle</span>
+                        <span class="material-symbols-rounded filled text-primary"
+                            style="font-size: 4rem;">account_circle</span>
                         <h4 class="mt-2 mb-0">Iniciar sesión</h4>
                         <p class="text-muted">Ingresa a tu cuenta de Alojha</p>
                     </div>
 
                     <!-- Formulario -->
                     <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate="">
-                        
+
                         <!-- Email -->
                         <div class="mb-3">
                             <label class="form-label">Correo electrónico</label>
@@ -22,20 +23,18 @@
                                 <span class="input-group-text">
                                     <span class="material-symbols-rounded">mail</span>
                                 </span>
-                                <input type="email" 
-                                       class="form-control" 
-                                       formControlName="email" 
-                                       placeholder="correo@ejemplo.com" />
+                                <input type="email" class="form-control" formControlName="email"
+                                    placeholder="correo@ejemplo.com" />
                             </div>
                             @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-                                <small class="text-danger">
-                                    @if (loginForm.get('email')?.errors?.['required']) {
-                                        El correo es obligatorio
-                                    }
-                                    @if (loginForm.get('email')?.errors?.['email']) {
-                                        Ingresa un correo válido
-                                    }
-                                </small>
+                            <small class="text-danger">
+                                @if (loginForm.get('email')?.errors?.['required']) {
+                                El correo es obligatorio
+                                }
+                                @if (loginForm.get('email')?.errors?.['email']) {
+                                Ingresa un correo válido
+                                }
+                            </small>
                             }
                         </div>
 
@@ -46,20 +45,18 @@
                                 <span class="input-group-text">
                                     <span class="material-symbols-rounded">lock</span>
                                 </span>
-                                <input type="password" 
-                                       class="form-control" 
-                                       formControlName="password" 
-                                       placeholder="••••••••" />
+                                <input type="password" class="form-control" formControlName="password"
+                                    placeholder="••••••••" />
                             </div>
                             @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-                                <small class="text-danger">
-                                    @if (loginForm.get('password')?.errors?.['required']) {
-                                        La contraseña es obligatoria
-                                    }
-                                    @if (loginForm.get('password')?.errors?.['minlength']) {
-                                        La contraseña debe tener al menos 8 caracteres
-                                    }
-                                </small>
+                            <small class="text-danger">
+                                @if (loginForm.get('password')?.errors?.['required']) {
+                                La contraseña es obligatoria
+                                }
+                                @if (loginForm.get('password')?.errors?.['minlength']) {
+                                La contraseña debe tener al menos 8 caracteres
+                                }
+                            </small>
                             }
                         </div>
 
@@ -71,14 +68,15 @@
                                     Recordarme
                                 </label>
                             </div>
-                            <a routerLink="/recover-password" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
+                            <a routerLink="/recover-password" class="text-decoration-none small">¿Olvidaste tu
+                                contraseña?</a>
                         </div>
 
                         <!-- Botón de inicio de sesión -->
                         <div class="d-grid mb-3">
-                            <button class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2" 
-                                    type="submit" 
-                                    [disabled]="loginForm.invalid">
+                            <button
+                                class="btn btn-primary btn-lg d-flex align-items-center justify-content-center gap-2"
+                                type="submit" [disabled]="loginForm.invalid">
                                 <span class="material-symbols-rounded">login</span>
                                 Iniciar sesión
                             </button>
@@ -91,9 +89,8 @@
 
                         <!-- Botón de registro -->
                         <div class="d-grid">
-                            <button type="button" 
-                                    routerLink="/register"
-                                    class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2">
+                            <button type="button" routerLink="/register"
+                                class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2">
                                 <span class="material-symbols-rounded">person_add</span>
                                 Crear cuenta nueva
                             </button>
@@ -106,8 +103,8 @@
             <!-- Información adicional -->
             <div class="text-center mt-4">
                 <p class="text-muted small mb-0">
-                    Al iniciar sesión, aceptas nuestros 
-                    <a href="#" class="text-decoration-none">Términos y condiciones</a> y 
+                    Al iniciar sesión, aceptas nuestros
+                    <a href="#" class="text-decoration-none">Términos y condiciones</a> y
                     <a href="#" class="text-decoration-none">Política de privacidad</a>
                 </p>
             </div>

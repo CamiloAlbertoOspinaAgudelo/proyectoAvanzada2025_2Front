@@ -17,14 +17,14 @@ export class ResetPassword {
     this.createForm();
   }
 
-  private createForm(){
+  private createForm() {
     this.resetForm = this.formBuilder.group({
       code: ['', [Validators.required]],
     }
     );
   }
 
-  public reset(){
-    
+  public reset() {
+
   }
 }

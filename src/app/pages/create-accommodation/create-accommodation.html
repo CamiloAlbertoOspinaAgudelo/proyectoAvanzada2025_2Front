@@ -4,11 +4,11 @@
         Crear Alojamiento
     </h5>
     <hr />
-    
+
     <div class="card">
         <div class="card-body">
             <form class="row g-3" [formGroup]="createPlaceForm" (ngSubmit)="createNewPlace()" novalidate="">
-                
+
                 <!-- Información básica -->
                 <div class="col-12">
                     <h6 class="text-primary">Información básica</h6>
@@ -16,14 +16,14 @@
 
                 <div class="col-12">
                     <label class="form-label">Título del alojamiento</label>
-                    <input type="text" class="form-control" formControlName="title" 
-                           placeholder="Ej: Apartamento moderno en el centro" />
+                    <input type="text" class="form-control" formControlName="title"
+                        placeholder="Ej: Apartamento moderno en el centro" />
                 </div>
 
                 <div class="col-12">
                     <label class="form-label">Descripción</label>
                     <textarea class="form-control" formControlName="description" rows="4"
-                              placeholder="Describe tu alojamiento..."></textarea>
+                        placeholder="Describe tu alojamiento..."></textarea>
                 </div>
 
                 <!-- Ubicación -->
@@ -33,34 +33,25 @@
                 </div>
 
                 <div formGroupName="address">
-          <div class="row g-3">
-            <div class="col-12 col-md-6">
-              <label class="form-label">Ciudad</label>
-              <select class="form-select" formControlName="city">
-                <option value="" disabled selected>Seleccione una ciudad</option>
-                @for (item of cities; track $index) {
-                  <option [value]="item">{{item}}</option>
-                }
-              </select>
-            </div>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">Ciudad</label>
+                            <select class="form-select" formControlName="city">
+                                <option value="" disabled selected>Seleccione una ciudad</option>
+                                @for (item of cities; track $index) {
+                                <option [value]="item">{{item}}</option>
+                                }
+                            </select>
+                        </div>
 
-            <div class="col-12 col-md-6">
-              <label class="form-label">Dirección</label>
-              <input type="text" class="form-control" formControlName="direction" 
-                     placeholder="Ej: Calle 15 # 20-30" />
-            </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-control" formControlName="direction"
+                                placeholder="Ej: Calle 15 # 20-30" />
+                        </div>
 
-            <!-- Coordenadas dentro de location -->
-            <div class="col-12" formGroupName="location">
-              <label class="form-label">Coordenadas (Ubicación en el mapa)</label>
-              <div class="input-group">
-                <input type="text" class="form-control" formControlName="lat" placeholder="Latitud (Ej: 4.5339)" />
-                <input type="text" class="form-control" formControlName="lng" placeholder="Longitud (Ej: -75.6811)" />
-              </div>
-              <small class="text-muted">Formato: latitud, longitud</small>
-            </div>
-          </div>
-        </div>
+                    </div>
+                </div>
                 <!-- Capacidad y precio -->
                 <div class="col-12 mt-4">
                     <h6 class="text-primary">Capacidad y precio</h6>
@@ -70,15 +61,14 @@
                     <label class="form-label">Precio por noche</label>
                     <div class="input-group">
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" formControlName="priceNight" 
-                               placeholder="150000" min="1" />
+                        <input type="number" class="form-control" formControlName="priceNight" placeholder="150000"
+                            min="1" />
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label class="form-label">Máximo de huéspedes</label>
-                    <input type="number" class="form-control" formControlName="capMax" 
-                           placeholder="4" min="1" />
+                    <input type="number" class="form-control" formControlName="capMax" placeholder="4" min="1" />
                 </div>
 
                 <!-- Imágenes -->
@@ -88,8 +78,7 @@
 
                 <div class="col-12">
                     <label class="form-label">Fotos del alojamiento</label>
-                    <input type="file" class="form-control" multiple accept="image/*"
-                           (change)="onFileChange($event)" />
+                    <input type="file" class="form-control" multiple accept="image/*" (change)="onFileChange($event)" />
                     <small class="text-muted">Puedes seleccionar múltiples imágenes</small>
                 </div>
 
@@ -102,8 +91,7 @@
                     <div class="row g-3">
                         <div class="col-12 col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       formControlName="wifi" id="wifi">
+                                <input class="form-check-input" type="checkbox" formControlName="wifi" id="wifi">
                                 <label class="form-check-label" for="wifi">
                                     <span class="material-symbols-rounded align-middle me-1">wifi</span>
                                     Wi-Fi
@@ -113,8 +101,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       formControlName="parking" id="parking">
+                                <input class="form-check-input" type="checkbox" formControlName="parking" id="parking">
                                 <label class="form-check-label" for="parking">
                                     <span class="material-symbols-rounded align-middle me-1">local_parking</span>
                                     Parqueadero
@@ -124,8 +111,8 @@
 
                         <div class="col-12 col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       formControlName="breakfast" id="breakfast">
+                                <input class="form-check-input" type="checkbox" formControlName="breakfast"
+                                    id="breakfast">
                                 <label class="form-check-label" for="breakfast">
                                     <span class="material-symbols-rounded align-middle me-1">restaurant</span>
                                     Desayuno incluido
@@ -135,8 +122,7 @@
 
                         <div class="col-12 col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       formControlName="pool" id="pool">
+                                <input class="form-check-input" type="checkbox" formControlName="pool" id="pool">
                                 <label class="form-check-label" for="pool">
                                     <span class="material-symbols-rounded align-middle me-1">pool</span>
                                     Piscina
@@ -146,8 +132,8 @@
 
                         <div class="col-12 col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                       formControlName="petsAllowed" id="petsAllowed">
+                                <input class="form-check-input" type="checkbox" formControlName="petsAllowed"
+                                    id="petsAllowed">
                                 <label class="form-check-label" for="petsAllowed">
                                     <span class="material-symbols-rounded align-middle me-1">pets</span>
                                     Se permiten mascotas
@@ -159,8 +145,8 @@
 
                 <!-- Botón de envío -->
                 <div class="col-12 d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" 
-                            type="submit" [disabled]="createPlaceForm.invalid">
+                    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" type="submit"
+                        [disabled]="createPlaceForm.invalid">
                         <span class="material-symbols-rounded">check</span>
                         Crear alojamiento
                     </button>

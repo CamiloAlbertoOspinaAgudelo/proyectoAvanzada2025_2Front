@@ -26,7 +26,7 @@ export class EditUser {
     );
   }
 
-  public editUser(){
+  public editUser() {
     console.log(this.editUserForm.value);
   }
 

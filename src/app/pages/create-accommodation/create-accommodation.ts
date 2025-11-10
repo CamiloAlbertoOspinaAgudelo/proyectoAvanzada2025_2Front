@@ -14,7 +14,7 @@ export class CreateAccommodation {
 
   cities: string[];
   createPlaceForm!: FormGroup;
-  
+
   constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
@@ -24,7 +24,7 @@ export class CreateAccommodation {
     this.createPlaceForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      priceNight: ['', [Validators.required, Validators.pattern(/^[0-9]+$/),Validators.min(1)]],
+      priceNight: ['', [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.min(1)]],
       capMax: ['', [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.min(1)]],
       photoUrls: [[], [Validators.required, this.atLeastOneFile]],
       address: this.formBuilder.group({
@@ -60,8 +60,8 @@ export class CreateAccommodation {
   }
 
   private atLeastOneFile(control: FormControl) {
-  const files = control.value;
-  return files && files.length > 0 ? null : { required: true };
+    const files = control.value;
+    return files && files.length > 0 ? null : { required: true };
   }
 
   ngOnInit(): void {
@@ -69,11 +69,11 @@ export class CreateAccommodation {
     this.mapService.create();
     // Se suscribe al evento de agregar marcador y actualiza el formulario
     this.mapService.addMarker().subscribe((marker) => {
-      this.createPlaceForm.get('location')?.setValue({
+      this.createPlaceForm.get('address.location')?.setValue({
         lat: marker.lat,
         lng: marker.lng,
       });
     });
   }
-  
+
 }

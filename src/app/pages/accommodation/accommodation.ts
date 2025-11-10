@@ -7,7 +7,7 @@ import { PlaceDTO } from '../../models/place-dto';
 
 @Component({
   selector: 'app-accommodation',
-  imports: [ RouterModule, ReactiveFormsModule, DecimalPipe],
+  imports: [RouterModule, ReactiveFormsModule, DecimalPipe],
   templateUrl: './accommodation.html',
   styleUrl: './accommodation.css'
 })
@@ -16,17 +16,17 @@ export class Accommodation {
   placeId: string = "";
   place: PlaceDTO | undefined;
 
-  constructor(private route: ActivatedRoute, private placesServices:PlacesService){
-    this.route.params.subscribe( (params) => {
+  constructor(private route: ActivatedRoute, private placesServices: PlacesService) {
+    this.route.params.subscribe((params) => {
       this.placeId = params["id"];
       this.get(this.placeId);
     });
   }
 
-  public get(placeID: string){
+  public get(placeID: string) {
     // El id que se recibe por la url es de tipo string, pero en el servicio es de tipo number por eso se hace el parseInt
     const selectedPlace = this.placesServices.get(parseInt(placeID));
-    if(selectedPlace != undefined){
+    if (selectedPlace != undefined) {
       this.place = selectedPlace;
     }
   }

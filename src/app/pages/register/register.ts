@@ -16,7 +16,7 @@ export class Register {
 
   cities: string[];
   registerForm!: FormGroup;
-  
+
   constructor(private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
@@ -33,7 +33,7 @@ export class Register {
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
     },
-    {validators: this.passwordsMatchValidator} as AbstractControlOptions
+      { validators: this.passwordsMatchValidator } as AbstractControlOptions
     );
   }
 
@@ -54,7 +54,7 @@ export class Register {
         // Mostramos el mensaje de error del backend
         Swal.fire({
           title: 'Error',
-          text: error.error.msg,
+          text: this.convertirAString(error.error.msg),
           icon: 'error'
         });
       }
@@ -76,6 +76,16 @@ export class Register {
       const files = Array.from(input.files);
       this.registerForm.patchValue({ photoUrl: files });
     }
+  }
+
+  public convertirAString(data: any) {
+
+    let result = Array.isArray(data)
+      ? data.map(e => `${e.field}: ${e.defaultMessage}`).join(", ")
+      : data;
+
+    return result;
+
   }
 
 }
