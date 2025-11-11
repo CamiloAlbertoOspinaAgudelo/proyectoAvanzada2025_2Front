@@ -59,11 +59,18 @@ export class EditPlace {
   }
 
   private loadPlace(id: string): void {
-    const data = this.placesService.getById(parseInt(id));
-    if (data) {
-      this.place = data;
-      this.patchForm(data);
-    }
+    this.placesService.getById(parseInt(id)).subscribe({
+      next: (data) => {
+        this.place = data.msg;
+        if (this.place) {
+          this.patchForm(this.place);
+        }
+      },
+      error: (error) => {
+        Swal.fire('Error!', "Error al cargar el alojamiento", 'error');
+        this.router.navigate(['/my-places']);
+      }
+    });
   }
 
   private patchForm(place: PlaceDTO): void {

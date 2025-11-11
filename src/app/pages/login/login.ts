@@ -35,7 +35,7 @@ export class Login {
     this.authService.login(loginDTO).subscribe({
       next: (data) => {
         this.tokenService.login(data.msg.token); // Guardamos el token usando el servicio de token
-        this.router.navigate(['/']).then(() => window.location.reload()); // Redireccionamos al inicio y  recargamos la página
+        this.router.navigate(['/user-profile']).then(() => window.location.reload()); // Redireccionamos al inicio y  recargamos la página
       },
       error: (error) => {
         Swal.fire({

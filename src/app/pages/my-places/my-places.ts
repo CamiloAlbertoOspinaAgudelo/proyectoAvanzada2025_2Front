@@ -42,15 +42,19 @@ export class MyPlaces {
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      this.placesService.getById(placeId).subscribe({
-        next: (data) => {
-          this.placesService.delete(placeId);
-          this.places = this.places.filter(p => p.id !== placeId);
-        },
-        error: (error) => {
-          Swal.fire('Error!', "Error al obtener el alojamiento", 'error');
-        }
-      })
+      if (result.isConfirmed) {
+        this.placesService.delete(placeId).subscribe({
+          next: (data) => {
+            if (this.places) {
+              this.places = this.places.filter(p => p.id !== placeId);
+              Swal.fire('Eliminado!', 'El alojamiento ha sido eliminado.', 'success');
+            }
+          },
+          error: (error) => {
+            Swal.fire('Error!', "Error al eliminar el alojamiento", 'error');
+          }
+        });
+      }
     });
   }
 

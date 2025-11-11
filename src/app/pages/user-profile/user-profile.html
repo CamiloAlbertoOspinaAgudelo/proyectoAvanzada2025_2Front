@@ -1,1 +1,157 @@
-<p>user-profile works!</p>
+<div class="container pt-5 pb-5">
+    <h5 class="mb-0 d-flex align-items-center">
+        <span class="material-symbols-rounded filled fs-1 me-3">account_circle</span>
+        Mi Perfil
+    </h5>
+    <hr />
+
+    @if (user) {
+    <div class="row">
+        <!-- Columna principal: Información del usuario -->
+        <div class="col-12 col-lg-8">
+            
+            <!-- Información personal -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title d-flex align-items-center mb-4">
+                        <span class="material-symbols-rounded filled text-primary me-2">badge</span>
+                        Información Personal
+                    </h5>
+                    
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label class="text-muted small">Nombre completo</label>
+                            <p class="mb-0 fw-semibold">{{ user.name }}</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="text-muted small">Correo electrónico</label>
+                            <p class="mb-0 fw-semibold">{{ user.email }}</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="text-muted small">Teléfono</label>
+                            <p class="mb-0 fw-semibold">{{ user.phone }}</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="text-muted small">Fecha de nacimiento</label>
+                            <p class="mb-0 fw-semibold">{{ user.dateBirth | date:'dd/MM/yyyy' }}</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="text-muted small">Rol</label>
+                            <p class="mb-0">
+                                <span class="badge bg-primary">{{ user.rol }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas (opcional) -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title d-flex align-items-center mb-4">
+                        <span class="material-symbols-rounded filled text-primary me-2">analytics</span>
+                        Estadísticas
+                    </h5>
+                    
+                    <div class="row g-3 text-center">
+                        <div class="col-6 col-md-4">
+                            <div class="border rounded p-3">
+                                <span class="material-symbols-rounded filled text-primary fs-2">home</span>
+                                <h4 class="mt-2 mb-0">0</h4>
+                                <small class="text-muted">Alojamientos</small>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-4">
+                            <div class="border rounded p-3">
+                                <span class="material-symbols-rounded filled text-success fs-2">calendar_month</span>
+                                <h4 class="mt-2 mb-0">0</h4>
+                                <small class="text-muted">Reservas</small>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-4">
+                            <div class="border rounded p-3">
+                                <span class="material-symbols-rounded filled text-warning fs-2">star</span>
+                                <h4 class="mt-2 mb-0">0</h4>
+                                <small class="text-muted">Reseñas</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Columna lateral: Foto de perfil y acciones -->
+        <div class="col-12 col-lg-4">
+            
+            <!-- Foto de perfil -->
+            <div class="card mb-3 text-center">
+                <div class="card-body">
+                    @if (user.photoUrl) {
+                    <img [src]="user.photoUrl" [alt]="user.name" 
+                         class="rounded-circle mb-3" 
+                         style="width: 150px; height: 150px; object-fit: cover;" />
+                    } @else {
+                    <span class="material-symbols-rounded filled text-primary mb-3" 
+                          style="font-size: 150px;">account_circle</span>
+                    }
+                    
+                    <h5 class="mb-1">{{ user.name }}</h5>
+                    <p class="text-muted mb-0">{{ user.email }}</p>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title mb-3">Acciones</h6>
+                    
+                    <div class="d-grid gap-2">
+                        <button routerLink="/edit-user" 
+                                class="btn btn-primary d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-rounded">edit</span>
+                            Editar perfil
+                        </button>
+
+                        <button routerLink="/my-places" 
+                                class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-rounded">home</span>
+                            Mis alojamientos
+                        </button>
+
+                        <button routerLink="/bookings" 
+                                class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-rounded">calendar_month</span>
+                            Mis reservas
+                        </button>
+
+                        <hr />
+
+                        <button (click)="deleteAccount()" 
+                                class="btn btn-outline-danger d-flex align-items-center justify-content-center gap-2">
+                            <span class="material-symbols-rounded">delete</span>
+                            Eliminar cuenta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    } @else {
+    <!-- Mensaje de carga -->
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-3 text-muted">Cargando información del perfil...</p>
+    </div>
+    }
+</div>
