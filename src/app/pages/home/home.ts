@@ -4,6 +4,7 @@ import { MapService } from '../../services/map-service';
 import { PlaceDTO } from '../../models/place-dto';
 import { MarkerDTO } from '../../models/marker-dto';
 import { PlacesService } from '../../services/places-service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +17,20 @@ export class Home implements OnInit {
   constructor(private mapService: MapService, private placesService: PlacesService) { }
 
   ngOnInit(): void {
-    this.mapService.create();
-    // Obtiene todos los alojamientos de prueba
-    const places = this.placesService.getAll();
-    // Mapea los alojamientos a marcadores y los dibuja en el mapa
-    const markers = this.mapItemToMarker(places);
-    // Dibuja los marcadores en el mapa
-    this.mapService.drawMarkers(markers);
+    this.getPlaces(0);
   }
+
+  public getPlaces(page: number) {
+  this.placesService.getAll(page).subscribe({
+    next: (data) => {
+      this.mapService.create(); // Crear el mapa cuando ya se tienen los alojamientos
+      this.mapService.drawMarkers(data.msg);  // Recuerde mapear la respuesta a MarkerDTO.
+    },
+    error: (error) => {
+      Swal.fire('Error!', "Error al obtener los alojamientos", 'error');
+    }
+  });
+}
 
   public mapItemToMarker(places: PlaceDTO[]): MarkerDTO[] {
     return places.map((item) => ({

@@ -13,10 +13,23 @@ import Swal from 'sweetalert2';
 })
 export class MyPlaces {
 
-  places: PlaceDTO[];
+  places: PlaceDTO[] | undefined;
 
   constructor(private placesService: PlacesService) {
-    this.places = this.placesService.getAll();
+    this.get();
+  }
+
+  public get() {
+    // El id que se recibe por la url es de tipo string, pero en el servicio es de tipo number por eso se hace el parseInt
+    this.placesService.getAll(0,).subscribe({
+      next: (data) => {
+        this.places = data.msg;
+      },
+      error: (error) => {
+        Swal.fire('Error!', "Error al obtener los alojamientos", 'error');
+      }
+    })
+
   }
 
   public onDelete(placeId: number) {
@@ -29,11 +42,15 @@ export class MyPlaces {
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      if (result.isConfirmed) {
-        this.placesService.delete(placeId);
-        this.places = this.places.filter(p => p.id !== placeId);
-        Swal.fire("Eliminado!", "El alojamiento ha sido eliminado correctamente.", "success");
-      }
+      this.placesService.getById(placeId).subscribe({
+        next: (data) => {
+          this.placesService.delete(placeId);
+          this.places = this.places.filter(p => p.id !== placeId);
+        },
+        error: (error) => {
+          Swal.fire('Error!', "Error al obtener el alojamiento", 'error');
+        }
+      })
     });
   }
 

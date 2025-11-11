@@ -59,7 +59,7 @@ export class EditPlace {
   }
 
   private loadPlace(id: string): void {
-    const data = this.placesService.get(parseInt(id));
+    const data = this.placesService.getById(parseInt(id));
     if (data) {
       this.place = data;
       this.patchForm(data);
@@ -121,7 +121,7 @@ export class EditPlace {
     };
 
     // Actualizamos en el servicio
-    this.placesService.update(parseInt(this.placeId), updated);
+    this.placesService.edit(parseInt(this.placeId), updated);
 
     alert('Alojamiento actualizado correctamente');
     this.router.navigate(['/my-places']);

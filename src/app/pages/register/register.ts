@@ -27,6 +27,7 @@ export class Register {
       name: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.maxLength(10)]],
       city: ['', [Validators.required]],
+      rol: ['', [Validators.required]],
       photoUrl: [''],
       dateBirth: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],

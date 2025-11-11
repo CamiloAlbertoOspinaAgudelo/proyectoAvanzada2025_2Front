@@ -3,6 +3,7 @@ import { AbstractControlOptions, FormBuilder, FormControl, FormGroup, ReactiveFo
 import Swal from 'sweetalert2';
 import { PlacesService } from '../../services/places-service';
 import { MapService } from '../../services/map-service';
+import { PlaceDTO } from '../../models/place-dto';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -14,6 +15,7 @@ export class CreateAccommodation {
 
   cities: string[];
   createPlaceForm!: FormGroup;
+  place: PlaceDTO | undefined;
 
   constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService) {
     this.createForm();
@@ -55,7 +57,7 @@ export class CreateAccommodation {
   }
 
   public createNewPlace() {
-    this.placesService.save(this.createPlaceForm.value);
+    this.placesService.create(this.createPlaceForm.value);
     Swal.fire("Exito!", "Se ha creado un nuevo alojamiento.", "success");
   }
 

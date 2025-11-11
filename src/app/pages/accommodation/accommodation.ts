@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 import { PlacesService } from '../../services/places-service';
 import { PlaceDTO } from '../../models/place-dto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-accommodation',
@@ -16,7 +17,7 @@ export class Accommodation {
   placeId: string = "";
   place: PlaceDTO | undefined;
 
-  constructor(private route: ActivatedRoute, private placesServices: PlacesService) {
+  constructor(private route: ActivatedRoute, private placesService: PlacesService) {
     this.route.params.subscribe((params) => {
       this.placeId = params["id"];
       this.get(this.placeId);
@@ -25,10 +26,15 @@ export class Accommodation {
 
   public get(placeID: string) {
     // El id que se recibe por la url es de tipo string, pero en el servicio es de tipo number por eso se hace el parseInt
-    const selectedPlace = this.placesServices.get(parseInt(placeID));
-    if (selectedPlace != undefined) {
-      this.place = selectedPlace;
-    }
+    this.placesService.getById(parseInt(placeID)).subscribe({
+      next: (data) => {
+        this.place = data.msg;
+      },
+      error: (error) => {
+        Swal.fire('Error!', "Error al obtener el alojamiento", 'error');
+      }
+    })
+
   }
 
   getGuestsArray(): number[] {
