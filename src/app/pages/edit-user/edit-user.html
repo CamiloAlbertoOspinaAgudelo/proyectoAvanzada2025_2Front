@@ -1,18 +1,93 @@
-<form [formGroup]="editUserForm" (ngSubmit)="editUser()" novalidate="">
-    <div>
-        <label>Nombre: </label>
-        <input type="text" formControlName="name" />
-    </div>
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
 
-    <div>
-        <label>Teléfono: </label>
-        <input type="text" formControlName="phone" />
-    </div>
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
 
-    <div>
-        <label>Foto de perfil: </label>
-        <input type="file" (change)="onFileChange($event)" />
-    </div>
+                    <!-- Encabezado -->
+                    <div class="text-center mb-4">
+                        <span class="material-symbols-rounded filled text-primary" style="font-size: 4rem;">edit</span>
+                        <h4 class="mt-2 mb-0">Editar Perfil</h4>
+                        <p class="text-muted">Actualiza tu información personal</p>
+                    </div>
 
-    <button type="submit" [disabled]="editUserForm.invalid">Registrarse</button>
-</form>
+                    <!-- Formulario -->
+                    <form [formGroup]="editUserForm" (ngSubmit)="editUser()" novalidate="">
+
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label class="form-label">Nombre completo</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <span class="material-symbols-rounded">person</span>
+                                </span>
+                                <input type="text" class="form-control" formControlName="name" placeholder="Juan Pérez" />
+                            </div>
+                            @if (editUserForm.get('name')?.invalid && editUserForm.get('name')?.touched) {
+                            <small class="text-danger">El nombre es obligatorio</small>
+                            }
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <span class="material-symbols-rounded">phone</span>
+                                </span>
+                                <input type="tel" class="form-control" formControlName="phone" placeholder="3001234567" maxlength="10" />
+                            </div>
+                            @if (editUserForm.get('phone')?.invalid && editUserForm.get('phone')?.touched) {
+                            <small class="text-danger">
+                                @if (editUserForm.get('phone')?.errors?.['required']) {
+                                El teléfono es obligatorio
+                                }
+                                @if (editUserForm.get('phone')?.errors?.['maxlength']) {
+                                Máximo 10 dígitos
+                                }
+                            </small>
+                            }
+                        </div>
+
+                        <!-- Fecha de nacimiento -->
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de nacimiento</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <span class="material-symbols-rounded">calendar_today</span>
+                                </span>
+                                <input type="date" class="form-control" formControlName="dateBirth" />
+                            </div>
+                            @if (editUserForm.get('dateBirth')?.invalid && editUserForm.get('dateBirth')?.touched) {
+                            <small class="text-danger">La fecha de nacimiento es obligatoria</small>
+                            }
+                        </div>
+
+                        <!-- Foto de perfil -->
+                        <div class="mb-4">
+                            <label class="form-label">Foto de perfil (opcional)</label>
+                            <input type="file" class="form-control" accept="image/*" (change)="onFileChange($event)" />
+                            <small class="text-muted">Formatos permitidos: JPG, PNG, GIF</small>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex justify-content-between gap-2">
+                            <button type="button" routerLink="/user-profile" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 flex-fill">
+                                <span class="material-symbols-rounded">arrow_back</span>
+                                Cancelar
+                            </button>
+
+                            <button type="submit" [disabled]="editUserForm.invalid" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 flex-fill">
+                                <span class="material-symbols-rounded">save</span>
+                                Guardar cambios
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

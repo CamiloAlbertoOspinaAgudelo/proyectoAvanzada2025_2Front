@@ -19,7 +19,7 @@ export class Header {
     if (this.isLogged) {
       this.email = this.tokenService.getEmail();
       this.rol = this.tokenService.getRole();
-      
+      console.log('Rol del usuario:', this.rol);
     }
   }
 
