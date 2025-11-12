@@ -19,16 +19,16 @@ export class UserService {
     return this.http.put<ResponseDTO>(this.usersURL, editUserDTO);
   }
 
-  public delete(id: string): Observable<ResponseDTO> {
+  public delete(id: number): Observable<ResponseDTO> {
     return this.http.delete<ResponseDTO>(`${this.usersURL}/${id}`);
   }
 
-  public get(id: string): Observable<ResponseDTO> {
+  public get(id: number): Observable<ResponseDTO> {
     return this.http.get<ResponseDTO>(`${this.usersURL}/${id}`);
   }
 
   // Permite obtener los alojamientos de un usuario paginados
-  public getPlaces(id: string, page: number): Observable<ResponseDTO> {
+  public getPlaces(id: number, page: number): Observable<ResponseDTO> {
     return this.http.get<ResponseDTO>(`${this.usersURL}/${id}/accommodation`, { params: { page } }); // Si el backend usa @RequestParam para paginación se debe enviar así
   }
 }

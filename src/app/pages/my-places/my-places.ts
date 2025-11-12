@@ -4,6 +4,8 @@ import { PlacesService } from '../../services/places-service';
 import { RouterLink, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { HostService } from '../../services/host-service';
+import { TokenService } from '../../services/token-service';
 
 @Component({
   selector: 'app-my-places',
@@ -13,15 +15,15 @@ import Swal from 'sweetalert2';
 })
 export class MyPlaces {
 
-  places: PlaceDTO[] | undefined;
+  places: PlaceDTO[] = [];
 
-  constructor(private placesService: PlacesService) {
+  constructor(private placesService: PlacesService, private hostService: HostService, private tokenService: TokenService) {
     this.get();
   }
 
   public get() {
-    // El id que se recibe por la url es de tipo string, pero en el servicio es de tipo number por eso se hace el parseInt
-    this.placesService.getAll(0,).subscribe({
+    const id = this.tokenService.getUserId();
+    this.hostService.getAccommodations(id, 0).subscribe({
       next: (data) => {
         this.places = data.msg;
       },

@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class UserProfile implements OnInit {
   
   user: any;
-  userId: string = '';
+  userId: number = 0;
 
   constructor(
     private userService: UserService,

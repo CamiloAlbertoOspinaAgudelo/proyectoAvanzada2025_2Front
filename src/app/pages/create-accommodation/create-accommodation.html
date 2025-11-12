@@ -7,7 +7,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form class="row g-3" [formGroup]="createPlaceForm" (ngSubmit)="createNewPlace()" novalidate="">
+            <form class="row g-3" [formGroup]="createPlaceForm" novalidate="">
 
                 <!-- Información básica -->
                 <div class="col-12">
@@ -78,8 +78,11 @@
 
                 <div class="col-12">
                     <label class="form-label">Fotos del alojamiento</label>
-                    <input type="file" class="form-control" multiple accept="image/*" (change)="onFileChange($event)" />
-                    <small class="text-muted">Puedes seleccionar múltiples imágenes</small>
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="file" class="form-control" multiple accept="image/*"
+                            (change)="onFileChange($event)" />
+                        <button class="btn btn-primary" (click)="uploadImages()">Subir imagenes</button>
+                    </div>
                 </div>
 
                 <!-- Servicios -->
@@ -146,7 +149,7 @@
                 <!-- Botón de envío -->
                 <div class="col-12 d-flex justify-content-center mt-4">
                     <button class="btn btn-primary d-flex align-items-center justify-content-center gap-1" type="submit"
-                        [disabled]="createPlaceForm.invalid">
+                        [disabled]="createPlaceForm.invalid" (click)="createNewPlace()">
                         <span class="material-symbols-rounded">check</span>
                         Crear alojamiento
                     </button>

@@ -45,13 +45,13 @@ export class TokenService {
     return token ? this.decodePayload(token) : null;
   }
 
-  public getUserId(): string {
+  public getUserId(): number {
     const token = this.getToken();
     if (token) {
       const values = this.decodePayload(token);
-      return values.sub;
+      return Number(values.sub);
     }
-    return "";
+    return 0;
   }
 
   public getRole(): string {
@@ -61,6 +61,10 @@ export class TokenService {
       return values.role;
     }
     return "";
+  }
+
+  public getEmail(): string {
+    return this.getPayload()?.email || "";
   }
 
 }

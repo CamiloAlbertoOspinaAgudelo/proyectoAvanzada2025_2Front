@@ -4,6 +4,9 @@ import Swal from 'sweetalert2';
 import { PlacesService } from '../../services/places-service';
 import { MapService } from '../../services/map-service';
 import { PlaceDTO } from '../../models/place-dto';
+import { PlaceServicesService } from '../../services/place-services-service';
+import { ImageService } from '../../services/image-service';
+import { CreatePlaceDTO } from '../../models/create-place-dto';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -14,10 +17,12 @@ import { PlaceDTO } from '../../models/place-dto';
 export class CreateAccommodation {
 
   cities: string[];
+  files: File[] = [];
   createPlaceForm!: FormGroup;
   place: PlaceDTO | undefined;
+  services: string[] = [];
 
-  constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService) {
+  constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService, private placeServicesService: PlaceServicesService, private imageService: ImageService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -51,14 +56,38 @@ export class CreateAccommodation {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      const files = Array.from(input.files);
-      this.createPlaceForm.patchValue({ photoUrls: files });
+      this.files = Array.from(input.files);
     }
   }
 
+  public uploadImages(){
+
+    this.imageService.upload(this.files[0]).subscribe({
+      next: (data) => {
+
+        const currentPhotos = this.createPlaceForm.get('photoUrls')?.value || [];
+        this.createPlaceForm.patchValue({
+          photoUrls: [...currentPhotos, data.msg.secure_url]
+        });
+
+      },
+      error: (error) => {
+        Swal.fire('Error!', error.error.msg, 'error');
+      }
+    });
+  }
+
   public createNewPlace() {
-    this.placesService.create(this.createPlaceForm.value);
-    Swal.fire("Exito!", "Se ha creado un nuevo alojamiento.", "success");
+    const createPlaceDTO = this.createPlaceForm.value as CreatePlaceDTO;
+
+    this.placesService.create(createPlaceDTO).subscribe({
+      next: (data) => {
+        Swal.fire('Creado!', data.msg, 'success');
+      },
+      error: (error) => {
+         Swal.fire('Error!', error.error.msg, 'error');
+      }
+    })
   }
 
   private atLeastOneFile(control: FormControl) {
@@ -76,6 +105,17 @@ export class CreateAccommodation {
         lng: marker.lng,
       });
     });
+  }
+
+  public getServices() {
+    this.placeServicesService.getAll().subscribe({
+      next: (data) => {
+        this.services = data.msg;
+      },
+      error: (error) => {
+        Swal.fire('Error!', error.error.msg, 'error');
+      }
+    })
   }
 
 }
