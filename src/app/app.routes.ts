@@ -13,6 +13,7 @@ import { UserProfile } from './pages/user-profile/user-profile';
 import { loginGuard } from './services/login-service';
 import { CreateBooking } from './pages/create-booking/create-booking';
 import { roleGuard } from './guards/role-service';
+import { MyBookings } from './pages/my-bookings/my-bookings';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -27,6 +28,7 @@ export const routes: Routes = [
     { path: 'edit-place/:id', component: EditPlace, canActivate: [roleGuard], data: { expectedRole: ["ROLE_HOST"] } },
     { path: 'user-profile', component: UserProfile },
     { path: 'create-booking', component: CreateBooking, canActivate: [roleGuard], data: { expectedRole: ["ROLE_USER"] } },
+    { path: 'my-bookings', component: MyBookings },
     { path: 'login', component: Login, canActivate: [loginGuard] },
     { path: 'register', component: Register, canActivate: [loginGuard] },
     { path: "**", pathMatch: "full", redirectTo: "" }

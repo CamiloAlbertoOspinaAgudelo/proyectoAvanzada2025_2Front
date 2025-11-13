@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { LoginDTO } from '../models/login-dto';
 import { ResponseDTO } from '../models/response-dto';
 import { CreateUserDTO } from '../models/create-user-dto';
+import { RecoverDTO } from '../models/recover-dto';
+import { ResetDTO } from '../models/reset-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,13 @@ export class AuthService {
 
   public create(createUserDTO: CreateUserDTO): Observable<ResponseDTO> {
     return this.http.post<ResponseDTO>(`${this.authURL}/register`, createUserDTO);
+  }
+
+  public recover(recoverDto: RecoverDTO): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(`${this.authURL}/recover`, recoverDto);
+  }
+
+  public reset(resetDto: ResetDTO): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(`${this.authURL}/reset`, resetDto);
   }
 }

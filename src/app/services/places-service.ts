@@ -49,4 +49,16 @@ export class PlacesService {
 
     return this.http.get<ResponseDTO>(this.placesURL, { params });
   }
+
+  public getMetrics(id: number): Observable<ResponseDTO> {
+    return this.http.get<ResponseDTO>(`${this.placesURL}/${id}/metrics`);
+  }
+
+  public getReviews(id: number): Observable<ResponseDTO> {
+    return this.http.get<ResponseDTO>(`${this.placesURL}/${id}/reviews`);
+  }
+
+  public getReserves(id: number): Observable<ResponseDTO> {
+    return this.http.get<ResponseDTO>(`${this.placesURL}/${id}/reserves`);
+  }
 }

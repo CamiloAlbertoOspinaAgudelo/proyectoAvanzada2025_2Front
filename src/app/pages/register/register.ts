@@ -6,6 +6,8 @@ import { UserService } from '../../services/user-service';
 import Swal from 'sweetalert2';
 import { CreateUserDTO } from '../../models/create-user-dto';
 import { AuthService } from '../../services/auth-service';
+import { HostService } from '../../services/host-service';
+import { CreateHostDTO } from '../../models/create-host-dto';
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterModule],
@@ -17,7 +19,7 @@ export class Register {
   cities: string[];
   registerForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private authService: AuthService, private hostService: HostService) {
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -41,25 +43,49 @@ export class Register {
   public createUser() {
     // Obtenemos los datos del formulario y los convertimos a CreateUserDTO
     const createUserDTO = this.registerForm.value as CreateUserDTO;
+    const createHostDTO = this.registerForm.value as CreateHostDTO;
+    createHostDTO.description = "hola mundo";
 
-    this.authService.create(createUserDTO).subscribe({
-      next: (data) => {
-        // Mostramos el mensaje de éxito del backend
-        Swal.fire({
-          title: 'Éxito',
-          text: data.msg,
-          icon: 'success'
-        });
-      },
-      error: (error) => {
-        // Mostramos el mensaje de error del backend
-        Swal.fire({
-          title: 'Error',
-          text: this.convertirAString(error.error.msg),
-          icon: 'error'
-        });
-      }
-    });
+    if (createUserDTO.rol == "ROL_USER") {
+      this.authService.create(createUserDTO).subscribe({
+        next: (data) => {
+          // Mostramos el mensaje de éxito del backend
+          Swal.fire({
+            title: 'Éxito',
+            text: data.msg,
+            icon: 'success'
+          });
+        },
+        error: (error) => {
+          // Mostramos el mensaje de error del backend
+          Swal.fire({
+            title: 'Error',
+            text: this.convertirAString(error.error.msg),
+            icon: 'error'
+          });
+        }
+      });
+    }else{
+
+      this.hostService.create(createHostDTO).subscribe({
+        next: (data) => {
+          // Mostramos el mensaje de éxito del backend
+          Swal.fire({
+            title: 'Éxito',
+            text: data.msg,
+            icon: 'success'
+          });
+        },
+        error: (error) => {
+          // Mostramos el mensaje de error del backend
+          Swal.fire({
+            title: 'Error',
+            text: this.convertirAString(error.error.msg),
+            icon: 'error'
+          });
+        }
+      });
+    }
   }
 
   public passwordsMatchValidator(formGroup: FormGroup) {
