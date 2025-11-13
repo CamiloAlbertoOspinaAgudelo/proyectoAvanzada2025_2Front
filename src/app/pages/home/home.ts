@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class Home implements OnInit {
 
+  places: PlaceDTO[] = [];
+
   constructor(private mapService: MapService, private placesService: PlacesService) { }
 
   ngOnInit(): void {
@@ -21,16 +23,16 @@ export class Home implements OnInit {
   }
 
   public getPlaces(page: number) {
-  this.placesService.getAll(page).subscribe({
-    next: (data) => {
-      this.mapService.create(); // Crear el mapa cuando ya se tienen los alojamientos
-      this.mapService.drawMarkers(data.msg);  // Recuerde mapear la respuesta a MarkerDTO.
-    },
-    error: (error) => {
-      Swal.fire('Error!', "Error al obtener los alojamientos", 'error');
-    }
-  });
-}
+    this.placesService.getAll(page).subscribe({
+      next: (data) => {
+        this.mapService.create(); // Crear el mapa cuando ya se tienen los alojamientos
+        this.mapService.drawMarkers(data.msg);  // Recuerde mapear la respuesta a MarkerDTO.
+      },
+      error: (error) => {
+        Swal.fire('Error!', "Error al obtener los alojamientos", 'error');
+      }
+    });
+  }
 
   public mapItemToMarker(places: PlaceDTO[]): MarkerDTO[] {
     return places.map((item) => ({
@@ -40,4 +42,16 @@ export class Home implements OnInit {
       photoUrl: item.photoUrls[0] || "",
     }));
   }
+
+  public get() {
+      this.placesService.getAll(0).subscribe({
+        next: (data) => {
+          this.places = data.msg;
+        },
+        error: (error) => {
+          Swal.fire('Error!', "Error al obtener los alojamientos", 'error');
+        }
+      })
+  
+    }
 }
