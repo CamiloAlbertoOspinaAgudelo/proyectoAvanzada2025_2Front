@@ -23,6 +23,7 @@ export class CreateAccommodation {
   services: string[] = [];
 
   constructor(private formBuilder: FormBuilder, private placesService: PlacesService, private mapService: MapService, private placeServicesService: PlaceServicesService, private imageService: ImageService) {
+    this.getServices();
     this.createForm();
     this.cities = ['Bogotá', 'Medellín', 'Cali', 'Armenia', 'Cartagena'];
   }
@@ -43,11 +44,7 @@ export class CreateAccommodation {
         }),
       }),
       services: this.formBuilder.group({
-        wifi: [false],
-        parking: [false],
-        breakfast: [false],
-        pool: [false],
-        petsAllowed: [false],
+
       }),
     });
   }
@@ -60,7 +57,7 @@ export class CreateAccommodation {
     }
   }
 
-  public uploadImages(){
+  public uploadImages() {
 
     this.imageService.upload(this.files[0]).subscribe({
       next: (data) => {
@@ -79,13 +76,21 @@ export class CreateAccommodation {
 
   public createNewPlace() {
     const createPlaceDTO = this.createPlaceForm.value as CreatePlaceDTO;
+    const selectedServices = Object.entries(createPlaceDTO.services)
+      .filter(([_, value]) => value) // solo los que estén en true
+      .map(([key]) => key);
 
-    this.placesService.create(createPlaceDTO).subscribe({
+    const payload = {
+      ...createPlaceDTO,
+      services: selectedServices
+    };
+
+    this.placesService.create(payload).subscribe({
       next: (data) => {
         Swal.fire('Creado!', data.msg, 'success');
       },
       error: (error) => {
-         Swal.fire('Error!', error.error.msg, 'error');
+        Swal.fire('Error!', error.error.msg, 'error');
       }
     })
   }
@@ -111,6 +116,11 @@ export class CreateAccommodation {
     this.placeServicesService.getAll().subscribe({
       next: (data) => {
         this.services = data.msg;
+        const servicesGroup: any = {};
+        this.services.forEach((service: string) => {
+          servicesGroup[service] = [false]; // valor inicial false
+        });
+        this.createPlaceForm.setControl('services', this.formBuilder.group(servicesGroup));
       },
       error: (error) => {
         Swal.fire('Error!', error.error.msg, 'error');

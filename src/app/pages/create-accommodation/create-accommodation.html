@@ -92,57 +92,16 @@
 
                 <div class="col-12" formGroupName="services">
                     <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" formControlName="wifi" id="wifi">
-                                <label class="form-check-label" for="wifi">
-                                    <span class="material-symbols-rounded align-middle me-1">wifi</span>
-                                    Wi-Fi
-                                </label>
+                        @for (item of services; track $index) {
+                            <div class="col-12 col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" formControlName="{{item}}">
+                                    <label class="form-check-label" for="{{item}}">
+                                        {{item}}
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" formControlName="parking" id="parking">
-                                <label class="form-check-label" for="parking">
-                                    <span class="material-symbols-rounded align-middle me-1">local_parking</span>
-                                    Parqueadero
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" formControlName="breakfast"
-                                    id="breakfast">
-                                <label class="form-check-label" for="breakfast">
-                                    <span class="material-symbols-rounded align-middle me-1">restaurant</span>
-                                    Desayuno incluido
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" formControlName="pool" id="pool">
-                                <label class="form-check-label" for="pool">
-                                    <span class="material-symbols-rounded align-middle me-1">pool</span>
-                                    Piscina
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" formControlName="petsAllowed"
-                                    id="petsAllowed">
-                                <label class="form-check-label" for="petsAllowed">
-                                    <span class="material-symbols-rounded align-middle me-1">pets</span>
-                                    Se permiten mascotas
-                                </label>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
 
