@@ -46,7 +46,7 @@ export class Register {
     const createHostDTO = this.registerForm.value as CreateHostDTO;
     createHostDTO.description = "hola mundo";
 
-    if (createUserDTO.rol == "ROL_USER") {
+    if (createUserDTO.rol == "USER") {
       this.authService.create(createUserDTO).subscribe({
         next: (data) => {
           // Mostramos el mensaje de éxito del backend
