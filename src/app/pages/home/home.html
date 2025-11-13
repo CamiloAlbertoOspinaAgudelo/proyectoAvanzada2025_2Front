@@ -1,6 +1,15 @@
 <div id="map"></div>
 
-<div class="table-responsive">
+<div class="container pt-3 pb-5">
+    <h5 class="mb-0 d-flex align-items-center">
+        <span class="material-symbols-rounded filled fs-2 me-3">home</span>
+        Todos los Alojamientos
+    </h5>
+    <hr />
+
+    @if (places && places.length > 0) {
+    <div class="card-body">
+        <div class="table-responsive">
             <table class="table align-middle table-striped table-hover mb-0">
                 <thead class="text-center">
                     <tr>
@@ -19,13 +28,17 @@
                         <td class="text-muted text-center">{{ item.id }}</td>
                         <td class="fw-semibold">{{ item.title }}</td>
                         <td class="text-center">
-                            <img [src]="" [alt]="item.title" class="img-thumbnail rounded"
+                            @if (item.photoUrls && item.photoUrls.length > 0) {
+                            <img [src]="item.photoUrls[0]" [alt]="item.title" class="img-thumbnail rounded"
                                 style="width: 90px; height: 60px; object-fit: cover;" />
+                            } @else {
+                            <span class="material-symbols-rounded text-muted">image</span>
+                            }
                         </td>
                         <td>{{ item.address.city }}</td>
                         <td>{{ item.address.direction }}</td>
                         <td class="text-center">
-                            <a routerLink="/accommodation/{{item.id}}" class="btn btn-outline-primary btn-icon me-1"
+                            <a routerLink="/accommodation/{{item.id}}" class="btn btn-outline-primary btn-icon"
                                 title="Ver detalle">
                                 <span class="material-symbols-rounded">visibility</span>
                             </a>
@@ -35,3 +48,13 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    } @else {
+    <!-- Mensaje cuando no hay alojamientos -->
+    <div class="text-center py-5">
+        <span class="material-symbols-rounded text-muted" style="font-size: 4rem;">home_work</span>
+        <h4 class="mt-3 text-muted">No hay alojamientos disponibles</h4>
+        <p class="text-muted">Vuelve más tarde para ver nuevas opciones</p>
+    </div>
+    }
+</div>

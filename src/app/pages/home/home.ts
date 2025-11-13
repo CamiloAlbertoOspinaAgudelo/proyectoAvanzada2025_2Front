@@ -25,6 +25,7 @@ export class Home implements OnInit {
   public getPlaces(page: number) {
     this.placesService.getAll(page).subscribe({
       next: (data) => {
+        this.places = data.msg;
         this.mapService.create(); // Crear el mapa cuando ya se tienen los alojamientos
         this.mapService.drawMarkers(data.msg);  // Recuerde mapear la respuesta a MarkerDTO.
       },
