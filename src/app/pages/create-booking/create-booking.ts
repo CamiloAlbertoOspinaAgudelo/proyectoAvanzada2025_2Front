@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BookingService } from '../../services/booking-service';
 import { PlacesService } from '../../services/places-service';
 import { CommonModule } from '@angular/common';
+import { BookingDto } from '../../models/booking-dto';
 
 @Component({
   selector: 'app-create-booking',
@@ -15,10 +16,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './create-booking.css'
 })
 export class CreateBooking {
-  bookingForm!: FormGroup;
+  createBookingForm!: FormGroup;
   accommodationId: string = "";
   place: PlaceDTO | undefined;
-  minDate: string = "";
+  booking: BookingDto | undefined;
   totalNights: number = 0;
   totalPrice: number = 0;
 
@@ -30,56 +31,24 @@ export class CreateBooking {
     private placesService: PlacesService
   ) {
     this.createForm();
-    this.setMinDate();
-  }
-
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.accommodationId = params["id"];
-      if (this.accommodationId) {
-        this.loadPlace(this.accommodationId);
-      }
-    });
   }
 
   private createForm() {
-    this.bookingForm = this.formBuilder.group({
+    this.createBookingForm = this.formBuilder.group({
       dateFrom: ['', [Validators.required]],
       dateTo: ['', [Validators.required]],
       guests: [1, [Validators.required, Validators.min(1)]]
     });
 
     // Escuchar cambios en las fechas para calcular el total
-    this.bookingForm.valueChanges.subscribe(() => {
+    this.createBookingForm.valueChanges.subscribe(() => {
       this.calculateTotal();
     });
   }
 
-  private setMinDate() {
-    const today = new Date();
-    this.minDate = today.toISOString().split('T')[0];
-  }
-
-  private loadPlace(id: string) {
-    this.placesService.getById(parseInt(id)).subscribe({
-      next: (data) => {
-        this.place = data.msg;
-        if (this.place) {
-          this.bookingForm.patchValue({
-            guests: 1
-          });
-        }
-      },
-      error: (error) => {
-        Swal.fire('Error!', 'No se pudo cargar la información del alojamiento', 'error');
-        this.router.navigate(['/']);
-      }
-    });
-  }
-
   private calculateTotal() {
-    const dateFrom = this.bookingForm.get('dateFrom')?.value;
-    const dateTo = this.bookingForm.get('dateTo')?.value;
+    const dateFrom = this.createBookingForm.get('dateFrom')?.value;
+    const dateTo = this.createBookingForm.get('dateTo')?.value;
 
     if (dateFrom && dateTo && this.place) {
       const from = new Date(dateFrom);
@@ -94,27 +63,17 @@ export class CreateBooking {
   }
 
   public createBooking() {
-    if (this.bookingForm.invalid) {
-      this.bookingForm.markAllAsTouched();
+
+    const createBookingDto = this.createBookingForm.value as CreateBookingDto;
+
+    if (this.createBookingForm.invalid) {
+      this.createBookingForm.markAllAsTouched();
       return;
     }
 
-    const createBookingDto: CreateBookingDto = {
-      accommodationId: parseInt(this.accommodationId),
-      dateFrom: new Date(this.bookingForm.get('dateFrom')?.value),
-      dateTo: new Date(this.bookingForm.get('dateTo')?.value),
-      guests: this.bookingForm.get('guests')?.value
-    };
-
     this.bookingService.create(createBookingDto).subscribe({
       next: (data) => {
-        Swal.fire({
-          title: 'Reserva creada!',
-          text: 'Tu reserva ha sido creada exitosamente',
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/bookings']);
-        });
+        Swal.fire('Creado!', data.msg, 'success');
       },
       error: (error) => {
         Swal.fire({
